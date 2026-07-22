@@ -1,5 +1,11 @@
 # Library RAG Assistant
 
+<p align="center">
+  <a href="https://library-rag-assistant-tlly23.streamlit.app/">
+    <img src="https://img.shields.io/badge/Live%20Demo-Open%20Assistant-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Live Demo">
+  </a>
+</p>
+
 Ask plain-English questions about a university library's policies and get
 back a grounded answer with the source documents shown alongside it — a
 small retrieval-augmented generation (RAG) demo built on Azure AI Search.
@@ -110,6 +116,30 @@ Run the tests with:
 ```bash
 pytest tests/
 ```
+
+## Deploying a public demo (Streamlit Community Cloud)
+
+**✅ Done** — live at
+[library-rag-assistant-tlly23.streamlit.app](https://library-rag-assistant-tlly23.streamlit.app/),
+running on the free Groq backend, querying the same Azure AI Search index
+populated by `ingest.py`.
+
+1. Push this repo to GitHub (already done if you're reading this there).
+2. On [share.streamlit.io](https://share.streamlit.io), create an app
+   pointing at this repo, branch `master`, file `app/streamlit_app.py`.
+3. In the app's **Settings → Secrets**, add:
+   ```toml
+   AZURE_SEARCH_ENDPOINT = "https://<your-service-name>.search.windows.net"
+   AZURE_SEARCH_API_KEY = "..."
+   RAG_LLM_BACKEND = "groq"
+   GROQ_API_KEY = "gsk_..."
+   ```
+4. Deploy. The app caps each browser session to 15 questions
+   (`MAX_QUERIES_PER_SESSION` in `app/streamlit_app.py`) since a public
+   deployment shares one free-tier Groq key across every visitor. The
+   deployed app only *queries* the Azure AI Search index — it doesn't
+   re-run ingestion, so `python ingest.py` still needs to be run locally
+   once against the same index beforehand.
 
 ## Example questions
 
