@@ -1,0 +1,7 @@
+streamlit>=1.35
+sentence-transformers>=3.0
+azure-search-documents>=11.5.1
+requests>=2.31
+pytest>=8.0
+# Generation backend (Groq default; also used for the optional OpenAI/Azure OpenAI options)
+openai>=1.30
